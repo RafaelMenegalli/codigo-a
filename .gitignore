@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# misc
+.DS_Store
+*.log
+*.tsbuildinfo
+.env*.local
+.vercel
+
+# NOTA: public/vsl.mp4 NÃO é ignorado de propósito (limite do GitHub: 100 MB por arquivo)
+.claude/

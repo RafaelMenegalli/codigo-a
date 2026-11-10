@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #110a0d;
+  --color-wine: #5a0d1d;
+  --color-crimson: #c4183a;
+  --color-rose: #ec5a75;
+  --color-gold: #cfa865;
+  --color-bone: #ece1dc;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
+}
+
+html {
+  background: #110a0d;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: #110a0d;
+  color: #ece1dc;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+}
+
+/* Textura de grano casi imperceptible */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Marco del vídeo: adaptable a la proporción real (--r = ancho/alto) */
+.vsl-frame {
+  width: 100%;
+  max-width: 1280px;
+}
+/* Desktop: ocupa el máximo posible sin pasar de la altura de la pantalla (menos la headline) */
+@media (min-width: 768px) {
+  .vsl-frame {
+    width: min(100%, calc((100vh - 9rem) * var(--r)), 1280px);
+    width: min(100%, calc((100dvh - 9rem) * var(--r)), 1280px);
+  }
+}
+
+/* Sin controles nativos (iOS Safari / WebKit) */
+video::-webkit-media-controls,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+}
+.vsl-frame,
+.vsl-frame video {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@keyframes cta-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes cta-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: 0 8px 28px -6px rgba(236, 42, 77, 0.55), 0 0 0 0 rgba(236, 42, 77, 0.55);
+  }
+  50% {
+    transform: scale(1.035);
+    filter: brightness(1.3);
+    box-shadow: 0 10px 50px -2px rgba(255, 60, 95, 0.95), 0 0 0 12px rgba(236, 42, 77, 0);
+  }
+}
+@keyframes soft-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+.cta-anim {
+  animation: cta-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
+    cta-pulse 1.1s ease-in-out 0.9s infinite;
+}
+.soft-pulse {
+  animation: soft-pulse 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-anim { animation: cta-in 0.01s both; }
+  .soft-pulse, .animate-ping { animation: none; }
+}
