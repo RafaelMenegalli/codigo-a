@@ -18,7 +18,7 @@ const SAVE_EVERY = 5; // segundos de vídeo entre cada guardado
 const MIN_RESUME = 5; // por debajo de esto no se ofrece retomar
 
 // Muy rápida al inicio, frena gradualmente y va muy lenta en el último tercio; f(0)=0 y f(1)=1 exactos.
-const curve = (x: number) => 1 - Math.pow(1 - x, 3.2);
+const curve = (x: number) => 1 - Math.pow(1 - x, 6.4);
 
 function storageGet(key: string): string | null {
   try {

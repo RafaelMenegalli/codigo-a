@@ -84,5 +84,5 @@ Si tu cuenta FTP ya apunta directamente a `public_html`, cambia `server-dir` en 
 
 - Sin API routes, server actions ni middleware: todo es estático.
 - El progreso del vídeo se guarda en `localStorage` cada 5 s para ofrecer retomar.
-- La barra de progreso es falsa (curva `1 - (1 - x)^3.2`) y no es clicable.
+- La barra de progreso es falsa (curva `1 - (1 - x)^6.4`) y no es clicable.
 - La página tiene `noindex`.
