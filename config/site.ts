@@ -15,7 +15,7 @@ export const VIDEO_ASPECT_FALLBACK = 9 / 16;
 // --- Botón de compra ---------------------------------------
 // Segundo del VÍDEO (no del tiempo en la página) en que aparece el botón.
 export const CTA_SECONDS = 785; // 13:05
-export const CHECKOUT_URL = "https://SEU-CHECKOUT-AQUI";
+export const CHECKOUT_URL = "https://pay.hotmart.com/M108420706N?off=7dn2t71q";
 export const CTA_TEXT = "Sí, quiero empezar a ligarme mujeres!";
 export const CTA_TRUST = [
   { icon: "lock", text: "Pago 100% seguro" },
