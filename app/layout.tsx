@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import {
-  META_PIXEL_ID,
   OG_IMAGE,
   SITE_DESCRIPTION,
   SITE_TITLE,
   SITE_URL,
 } from "@/config/site";
+import { NEXOFY_UTM_SCRIPT } from "@/config/nexofy-utm";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -45,34 +44,39 @@ export const viewport: Viewport = {
   themeColor: "#110a0d",
 };
 
-// Solo dígitos: evita inyectar código a través del ID.
-const pixelId = /^\d+$/.test(META_PIXEL_ID) ? META_PIXEL_ID : "";
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${playfair.variable} ${montserrat.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: NEXOFY_UTM_SCRIPT }} />
+
+        {/* Meta Pixel · NexoFy (el PageView lo dispara nexofy.js con data-auto-page-view) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','3486809008159107');`,
+          }}
+        />
+        <script
+          src="https://appnexofy.com.br/nexofy.js"
+          data-public-key="cmu4ga7xz002njx048er5hwrc"
+          data-auto-page-view="true"
+        />
+      </head>
       <body>
         {children}
 
-        {pixelId && (
-          <>
-            <Script id="meta-pixel" strategy="afterInteractive">
-              {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixelId}');fbq('track','PageView');`}
-            </Script>
-            <noscript>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                height="1"
-                width="1"
-                style={{ display: "none" }}
-                alt=""
-                src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
-              />
-            </noscript>
-          </>
-        )}
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            alt=""
+            src="https://www.facebook.com/tr?id=3486809008159107&ev=PageView&noscript=1"
+          />
+        </noscript>
 
         {/*
           ---- UTMify (descomenta y pega tu script) ----
